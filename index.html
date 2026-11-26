@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier Lumière • Salão de Beleza &amp; Cuidados</title>
+  <meta name="description" content="Salão de beleza boutique especializado em mechas, tratamentos capilares, unhas, maquiagem e visagismo. Monte seu atendimento e agende seu horário." />
+
+  <!-- Fonts: Fraunces + Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            salon: {
+              silk: '#FAF7F5',
+              blush: '#F2E4DF',
+              sageLight: '#E6EDE9',
+              sage: '#5A766A',
+              sageDark: '#3D5249',
+              espresso: '#261F1D',
+              muted: '#6E625E'
+            }
+          },
+          fontFamily: {
+            display: ['"Fraunces"', 'Georgia', 'serif'],
+            sans: ['"Outfit"', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .arch-frame {
+      border-top-left-radius: 9999px;
+      border-top-right-radius: 9999px;
+      border-bottom-left-radius: 1.5rem;
+      border-bottom-right-radius: 1.5rem;
+    }
+
+    .service-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .service-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 30px -10px rgba(90, 118, 106, 0.16);
+      }
+    }
+
+    .modal-backdrop {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-panel {
+      transform: translateY(18px) scale(0.98);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .modal-backdrop.open .modal-panel {
+      transform: translateY(0) scale(1);
+    }
+  </style>
+</head>
+<body class="bg-salon-silk text-salon-espresso font-sans antialiased pb-28 selection:bg-salon-sage selection:text-white">
+
+  <!-- =======================================================================
+       TOP NAVBAR LIMPA
+       ======================================================================= -->
+  <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200/70">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      <a href="#topo" class="flex items-center gap-2.5">
+        <span class="w-9 h-9 rounded-full bg-salon-sageLight text-salon-sageDark flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-spa text-sm"></i>
+        </span>
+        <span class="font-display font-medium text-xl sm:text-2xl tracking-tight text-salon-espresso">Atelier Lumière</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-7 text-xs font-semibold text-salon-muted">
+        <a href="#salao" class="hover:text-salon-sageDark transition-colors">O Salão</a>
+        <a href="#servicos" class="hover:text-salon-sageDark transition-colors">Serviços</a>
+        <a href="#resultados" class="hover:text-salon-sageDark transition-colors">Resultados</a>
+        <a href="#equipe" class="hover:text-salon-sageDark transition-colors">Especialistas</a>
+        <a href="#localizacao" class="hover:text-salon-sageDark transition-colors">Localização</a>
+      </div>
+
+      <button type="button" onclick="abrirModalAgenda()" class="px-4 py-2.5 rounded-full bg-salon-sage hover:bg-salon-sageDark text-white font-semibold text-xs transition cursor-pointer shadow-sm flex items-center gap-2">
+        <i class="fa-regular fa-calendar-check"></i>
+        <span>Agendar Horário</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- =======================================================================
+       HERO ASSIMÉTRICO COM MOLDURA EM ARCO (VERDE SÁLVIA CLARO + BLUSH)
+       ======================================================================= -->
+  <header id="topo" class="relative overflow-hidden bg-gradient-to-b from-salon-blush/55 via-salon-silk to-salon-silk border-b border-stone-200/60">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <!-- Left: Editorial Copy & Quick Category Shortcuts -->
+      <div class="lg:col-span-7 space-y-5">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-salon-sageDark border-b border-salon-sage/25 pb-2 inline-block hero-anim">
+          Jardins, São Paulo · Desde 2014
+        </p>
+
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-[3.5rem] font-medium leading-[1.08] tracking-tight text-salon-espresso hero-anim">
+          Beleza leve, cuidado real e tempo só para <span class="italic text-salon-sage">você.</span>
+        </h1>
+
+        <p class="text-salon-muted text-sm sm:text-base max-w-xl leading-relaxed hero-anim">
+          Um refúgio acolhedor pensado para valorizar seus traços naturais. Escolha os serviços que deseja combinar, veja a duração estimada e solicite seu horário em segundos.
+        </p>
+
+        <!-- Quick Interactive Area Shortcuts -->
+        <div class="pt-2 hero-anim">
+          <p class="text-[11px] font-bold uppercase tracking-widest text-salon-muted mb-2.5">O que você quer fazer hoje?</p>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" onclick="irParaCategoria('cabelos')" class="px-4 py-2.5 rounded-full bg-white border border-stone-200 hover:border-salon-sage hover:bg-salon-sageLight/60 text-xs font-semibold text-salon-espresso transition cursor-pointer shadow-sm">
+              Cabelos &amp; Tratamentos
+            </button>
+            <button type="button" onclick="irParaCategoria('coloracao')" class="px-4 py-2.5 rounded-full bg-white border border-stone-200 hover:border-salon-sage hover:bg-salon-sageLight/60 text-xs font-semibold text-salon-espresso transition cursor-pointer shadow-sm">
+              Mechas &amp; Coloração
+            </button>
+            <button type="button" onclick="irParaCategoria('unhas')" class="px-4 py-2.5 rounded-full bg-white border border-stone-200 hover:border-salon-sage hover:bg-salon-sageLight/60 text-xs font-semibold text-salon-espresso transition cursor-pointer shadow-sm">
+              Unhas &amp; Spa
+            </button>
+            <button type="button" onclick="irParaCategoria('sobrancelhas')" class="px-4 py-2.5 rounded-full bg-white border border-stone-200 hover:border-salon-sage hover:bg-salon-sageLight/60 text-xs font-semibold text-salon-espresso transition cursor-pointer shadow-sm">
+              Sobrancelhas &amp; Maquiagem
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Arch-Framed Salon Photo -->
+      <div class="lg:col-span-5 flex justify-center hero-anim">
+        <div class="relative w-full max-w-sm">
+          <div class="arch-frame overflow-hidden shadow-2xl border-4 border-white aspect-[4/4.8] bg-salon-blush">
+            <img
+              src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=900&q=85"
+              alt="Atendimento capilar no Atelier Lumière"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="absolute -bottom-3 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 shadow-lg border border-stone-200/70 flex items-center justify-between gap-3">
+            <div>
+              <p class="font-display font-semibold text-sm text-salon-espresso">Atendimento com hora marcada</p>
+              <p class="text-[11px] text-salon-muted">Terça a Sábado • 09h às 20h</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-salon-sageLight text-salon-sageDark text-[11px] font-bold shrink-0">4.9 ★</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =======================================================================
+       BLOCO "O SALÃO" (EXPERIÊNCIA + NÚMEROS DE AUTORIDADE)
+       ======================================================================= -->
+  <section id="salao" class="bg-white border-b border-stone-200/60 py-14 sm:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-5 reveal-up">
+        <div class="rounded-3xl overflow-hidden shadow-lg border border-stone-200/70 aspect-[4/3] bg-salon-blush">
+          <img
+            src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1000&q=80"
+            alt="Espaço interno e recepção acolhedora do Atelier Lumière"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 space-y-5 reveal-up">
+        <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-salon-sage">O Salão</p>
+        <h2 class="font-display text-3xl sm:text-5xl font-medium text-salon-espresso leading-tight">
+          Um espaço feito para <em class="text-salon-sage italic">desacelerar</em>.
+        </h2>
+        <p class="text-salon-muted text-sm sm:text-base leading-relaxed max-w-xl">
+          No Atelier Lumière, unimos técnica atualizada, produtos de alta performance e atendimento sem pressa. Do café na recepção à finalização dos fios ou das unhas, sua experiência importa tanto quanto o resultado.
+        </p>
+
+        <dl class="pt-6 border-t border-stone-200/80 grid grid-cols-3 gap-4 sm:gap-8">
+          <div>
+            <dt class="font-display text-3xl sm:text-4xl font-medium text-salon-sage">12+</dt>
+            <dd class="text-xs sm:text-sm text-salon-muted mt-0.5">anos de história</dd>
+          </div>
+          <div>
+            <dt class="font-display text-3xl sm:text-4xl font-medium text-salon-sage">8</dt>
+            <dd class="text-xs sm:text-sm text-salon-muted mt-0.5">especialistas</dd>
+          </div>
+          <div>
+            <dt class="font-display text-3xl sm:text-4xl font-medium text-salon-sage">5 mil+</dt>
+            <dd class="text-xs sm:text-sm text-salon-muted mt-0.5">clientes atendidas</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       MENU DE SERVIÇOS MULTI-SELEÇÃO (CORAÇÃO DO SALÃO)
+       ======================================================================= -->
+  <main id="servicos" class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 reveal-up">
+      <div>
+        <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-salon-sage">Menu de Serviços</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-medium text-salon-espresso mt-1">
+          Monte seu atendimento personalizado
+        </h2>
+        <p class="text-xs sm:text-sm text-salon-muted mt-1">
+          Selecione um ou mais serviços abaixo para somar o tempo estimado e enviar direto para nossa recepção.
+        </p>
+      </div>
+    </div>
+
+    <!-- Abas por Categoria -->
+    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-7 reveal-up" id="abas-servicos">
+      <button type="button" data-tab="cabelos" class="tab-btn px-5 py-2.5 rounded-full text-xs font-bold bg-salon-sage text-white shrink-0 transition cursor-pointer">
+        Cabelos &amp; Tratamentos
+      </button>
+      <button type="button" data-tab="coloracao" class="tab-btn px-5 py-2.5 rounded-full text-xs font-semibold bg-white text-salon-muted border border-stone-200 hover:border-salon-sage shrink-0 transition cursor-pointer">
+        Mechas &amp; Coloração
+      </button>
+      <button type="button" data-tab="unhas" class="tab-btn px-5 py-2.5 rounded-full text-xs font-semibold bg-white text-salon-muted border border-stone-200 hover:border-salon-sage shrink-0 transition cursor-pointer">
+        Unhas &amp; Spa
+      </button>
+      <button type="button" data-tab="sobrancelhas" class="tab-btn px-5 py-2.5 rounded-full text-xs font-semibold bg-white text-salon-muted border border-stone-200 hover:border-salon-sage shrink-0 transition cursor-pointer">
+        Sobrancelhas &amp; Maquiagem
+      </button>
+    </div>
+
+    <!-- Lista de Serviços -->
+    <div id="grid-servicos" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+  </main>
+
+  <!-- =======================================================================
+       GALERIA DE RESULTADOS & AMBIENTE
+       ======================================================================= -->
+  <section id="resultados" class="bg-salon-blush/45 border-y border-stone-200/70 py-14 sm:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="max-w-2xl mb-10 reveal-up">
+        <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-salon-sage">Galeria</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-medium text-salon-espresso mt-1">
+          Nosso espaço e acabamentos reais
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 reveal-up">
+        <div class="rounded-2xl overflow-hidden aspect-[4/5] bg-white shadow-sm group">
+          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=700&q=80" alt="Finalização e brilho capilar" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        </div>
+        <div class="rounded-2xl overflow-hidden aspect-[4/5] bg-white shadow-sm group">
+          <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=700&q=80" alt="Manicure e nail design" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        </div>
+        <div class="rounded-2xl overflow-hidden aspect-[4/5] bg-white shadow-sm group">
+          <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=700&q=80" alt="Ambiente acolhedor do salão" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        </div>
+        <div class="rounded-2xl overflow-hidden aspect-[4/5] bg-white shadow-sm group">
+          <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=700&q=80" alt="Corte e movimento natural" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       NOSSAS ESPECIALISTAS (EQUIPE)
+       ======================================================================= -->
+  <section id="equipe" class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+    <div class="max-w-2xl mb-10 reveal-up">
+      <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-salon-sage">Equipe</span>
+      <h2 class="font-display text-3xl sm:text-4xl font-medium text-salon-espresso mt-1">
+        Profissionais dedicadas a cada detalhe
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-up">
+      <article class="bg-white rounded-3xl border border-stone-200/80 p-6 flex items-center gap-4 shadow-sm">
+        <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=400&q=80" alt="Camila Duarte" class="w-16 h-16 rounded-full object-cover shrink-0 border-2 border-salon-sageLight" />
+        <div>
+          <h3 class="font-display font-semibold text-lg text-salon-espresso">Camila Duarte</h3>
+          <p class="text-xs font-semibold text-salon-sage">Cabeleireira &amp; Visagista</p>
+          <p class="text-xs text-salon-muted mt-1">Cortes em camadas, escovas e diagnóstico capilar.</p>
+        </div>
+      </article>
+
+      <article class="bg-white rounded-3xl border border-stone-200/80 p-6 flex items-center gap-4 shadow-sm">
+        <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=400&q=80" alt="Helena Prado" class="w-16 h-16 rounded-full object-cover shrink-0 border-2 border-salon-sageLight" />
+        <div>
+          <h3 class="font-display font-semibold text-lg text-salon-espresso">Helena Prado</h3>
+          <p class="text-xs font-semibold text-salon-sage">Especialista em Mechas</p>
+          <p class="text-xs text-salon-muted mt-1">Morena iluminada, loiros saudáveis e tonalização.</p>
+        </div>
+      </article>
+
+      <article class="bg-white rounded-3xl border border-stone-200/80 p-6 flex items-center gap-4 shadow-sm">
+        <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=400&q=80" alt="Fernanda Lins" class="w-16 h-16 rounded-full object-cover shrink-0 border-2 border-salon-sageLight" />
+        <div>
+          <h3 class="font-display font-semibold text-lg text-salon-espresso">Fernanda Lins</h3>
+          <p class="text-xs font-semibold text-salon-sage">Manicure &amp; Spa dos Pés</p>
+          <p class="text-xs text-salon-muted mt-1">Esmaltação em gel, blindagem e spa dos pés.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       DEPOIMENTO EDITORIAL ÚNICO
+       ======================================================================= -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 pb-14 sm:pb-20 text-center reveal-up">
+    <div class="rounded-3xl bg-salon-blush/40 border border-stone-200/60 px-6 py-10 sm:px-12 sm:py-14">
+      <i class="fa-solid fa-quote-left text-2xl text-salon-sage/60 mb-4 block"></i>
+      <blockquote class="font-display text-2xl sm:text-4xl italic leading-snug text-salon-espresso">
+        “Saí me sentindo outra mulher. O cuidado de cada profissional, do atendimento ao acabamento, é incomparável.”
+      </blockquote>
+      <p class="mt-5 text-xs font-semibold uppercase tracking-[0.25em] text-salon-muted">
+        Mariana S. · cliente desde 2019
+      </p>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       LOCALIZAÇÃO, HORÁRIOS & RODAPÉ
+       ======================================================================= -->
+  <section id="localizacao" class="max-w-6xl mx-auto px-4 sm:px-6 pb-14 reveal-up">
+    <div class="rounded-3xl bg-white border border-stone-200/80 overflow-hidden shadow-sm grid grid-cols-1 lg:grid-cols-12">
+      <div class="lg:col-span-5 p-7 sm:p-9 bg-salon-sageLight/55 flex flex-col justify-between space-y-6">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-salon-sageDark">Onde Estamos</span>
+          <h2 class="font-display text-3xl font-medium text-salon-espresso mt-1">Jardins • São Paulo</h2>
+          <p class="text-sm text-salon-muted mt-3 leading-relaxed">
+            Alameda Lorena, 1.280 — Jardins, São Paulo - SP<br />
+            Estacionamento conveniado na porta.
+          </p>
+        </div>
+        <div class="text-xs text-salon-espresso space-y-1.5 border-t border-salon-sage/20 pt-4">
+          <p><i class="fa-regular fa-clock text-salon-sage mr-2"></i><strong>Terça a Sexta:</strong> 09h00 às 20h00</p>
+          <p><i class="fa-regular fa-clock text-salon-sage mr-2"></i><strong>Sábado:</strong> 09h00 às 18h00</p>
+          <p><i class="fa-solid fa-phone text-salon-sage mr-2"></i><strong>Recepção:</strong> (11) 3088-4400</p>
+        </div>
+      </div>
+      <div class="lg:col-span-7 min-h-[260px] bg-stone-100">
+        <iframe
+          title="Mapa Atelier Lumière"
+          src="https://www.google.com/maps?q=Alameda+Lorena,+1280,+Sao+Paulo&output=embed"
+          class="w-full h-full min-h-[260px] border-0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-salon-espresso text-stone-300 pt-10 pb-24 px-4 text-xs">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-center sm:text-left">
+        <p class="font-display font-medium text-white text-lg">Atelier Lumière</p>
+        <p class="text-stone-400">Salão de Beleza • Jardins, SP</p>
+      </div>
+
+      <a href="https://instagram.com/atelierlumiere.beauty" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-salon-sage text-white font-semibold transition">
+        <i class="fa-brands fa-instagram"></i>
+        <span>@atelierlumiere.beauty</span>
+      </a>
+
+      <p class="text-[11px] text-stone-400">
+        Modelo Demo • Desenvolvido por
+        <a href="https://oppikoferstudioweb.vercel.app" target="_blank" rel="noopener" class="text-salon-blush font-semibold hover:underline">Oppikofer • Studio Web</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- =======================================================================
+       BARRA FLUTUANTE DE RESUMO MULTI-SERVIÇOS
+       ======================================================================= -->
+  <div id="barra-combo" class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[94%] max-w-lg bg-salon-espresso text-white px-4 py-3 rounded-2xl shadow-2xl border border-salon-sage/50 z-40 translate-y-28 opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <div id="combo-qtd" class="w-9 h-9 rounded-xl bg-salon-sage text-white font-bold flex items-center justify-center text-sm">0</div>
+      <div>
+        <p id="combo-tempo" class="text-[11px] text-salon-blush font-medium">0 min estimados</p>
+        <p id="combo-valor" class="font-display font-semibold text-base text-white leading-tight">R$ 0,00</p>
+      </div>
+    </div>
+    <button type="button" onclick="abrirModalAgenda()" class="px-4 py-2.5 rounded-xl bg-salon-sage hover:bg-salon-sageDark text-white font-bold text-xs transition cursor-pointer shrink-0">
+      Escolher Horário <i class="fa-solid fa-arrow-right ml-1"></i>
+    </button>
+  </div>
+
+  <!-- =======================================================================
+       MODAL CONCIERGE DE AGENDAMENTO
+       ======================================================================= -->
+  <div id="modal-agenda" class="modal-backdrop fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true">
+    <div class="modal-panel bg-white w-full max-w-lg max-h-[92vh] overflow-y-auto rounded-3xl shadow-2xl border border-stone-200 p-5 sm:p-7 space-y-4">
+      <div class="flex items-start justify-between gap-3 pb-3 border-b border-stone-100">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-salon-sage">Concierge de Agendamento</span>
+          <h3 class="font-display text-2xl font-medium text-salon-espresso">Solicitar Horário</h3>
+        </div>
+        <button type="button" onclick="fecharModalAgenda()" aria-label="Fechar" class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Resumo dos serviços selecionados -->
+      <div id="ma-resumo-box" class="p-3.5 rounded-2xl bg-salon-sageLight/60 border border-salon-sage/20 space-y-2"></div>
+
+      <form id="form-agenda" class="space-y-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-salon-espresso mb-1">Seu nome *</label>
+            <input id="ma-nome" type="text" required placeholder="Como podemos te chamar?" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-salon-sage" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-salon-espresso mb-1">Especialista</label>
+            <select id="ma-prof" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm bg-white">
+              <option value="Primeiro horário disponível">Primeiro horário disponível</option>
+              <option value="Camila Duarte (Cabelos)">Camila Duarte (Cabelos)</option>
+              <option value="Helena Prado (Mechas)">Helena Prado (Mechas)</option>
+              <option value="Fernanda Lins (Unhas)">Fernanda Lins (Unhas)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-salon-espresso mb-1">Dia / Período preferido</label>
+            <select id="ma-periodo" class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm bg-white">
+              <option value="Terça a Sexta — Manhã">Terça a Sexta — Manhã</option>
+              <option value="Terça a Sexta — Tarde">Terça a Sexta — Tarde</option>
+              <option value="Sábado — Manhã">Sábado — Manhã</option>
+              <option value="Sábado — Tarde">Sábado — Tarde</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-salon-espresso mb-1">Observação (opcional)</label>
+            <input id="ma-obs" type="text" placeholder="Ex: Cabelo longo, tenho evento..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs sm:text-sm focus:outline-none focus:border-salon-sage" />
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-salon-sage hover:bg-salon-sageDark text-white font-bold text-xs sm:text-sm transition cursor-pointer flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-base"></i>
+          <span>Confirmar Disponibilidade no WhatsApp</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lenis + GSAP -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    const WHATSAPP_NUMBER = '5511999990000';
+
+    const SERVICOS = [
+      // Cabelos & Tratamentos
+      { id: 'corte-visagista', cat: 'cabelos', nome: 'Corte Visagista + Finalização', duracaoMin: 60, preco: 160, desc: 'Análise de formato de rosto, corte personalizado e escova modelada.' },
+      { id: 'escova-modelada', cat: 'cabelos', nome: 'Lavagem Terapêutica + Escova', duracaoMin: 45, preco: 95, desc: 'Higienização relaxante com massagem no couro cabeludo e finalização com brilho.' },
+      { id: 'cronograma-capilar', cat: 'cabelos', nome: 'Ritual de Nutrição Profunda', duracaoMin: 50, preco: 145, desc: 'Reposição lipídica e hidratação intensa com vaporizador para maciez imediata.' },
+      { id: 'penteado-festa', cat: 'cabelos', nome: 'Penteado Social / Madrinhas', duracaoMin: 75, preco: 210, desc: 'Preso clássico, semipreso ou ondas de longa duração para eventos.' },
+
+      // Mechas & Coloração
+      { id: 'morena-iluminada', cat: 'coloracao', nome: 'Morena Iluminada / Mechas Suaves', duracaoMin: 180, preco: 480, desc: 'Iluminação natural sem marcação na raiz, já inclui tratamento pós-química.' },
+      { id: 'raiz-tonalizacao', cat: 'coloracao', nome: 'Retoque de Raiz + Tonalização', duracaoMin: 90, preco: 220, desc: 'Cobertura uniforme e renovação do brilho e nuance dos fios.' },
+
+      // Unhas & Spa
+      { id: 'manicure-gel', cat: 'unhas', nome: 'Manicure + Esmaltação em Gel', duracaoMin: 60, preco: 90, desc: 'Cutilagem delicada e esmaltação de longa duração sem descascar.' },
+      { id: 'spa-pes-maos', cat: 'unhas', nome: 'Combo Pé + Mão Tradicional & Spa', duracaoMin: 75, preco: 110, desc: 'Esfoliação suave, hidratação profunda e esmaltação completa.' },
+
+      // Sobrancelhas & Maquiagem
+      { id: 'design-henna', cat: 'sobrancelhas', nome: 'Design de Sobrancelhas & Alinhamento', duracaoMin: 45, preco: 120, desc: 'Alinhamento estratégico dos fios para olhar mais leve e preenchido.' },
+      { id: 'make-social', cat: 'sobrancelhas', nome: 'Maquiagem Social Iluminada', duracaoMin: 60, preco: 230, desc: 'Pele iluminada de alta fixação, já com aplicação de cílios.' }
+    ];
+
+    let abaAtual = 'cabelos';
+    const selecionados = new Set();
+
+    const formatarMoeda = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const formatarDuracao = (min) => {
+      if (min < 60) return `${min} min`;
+      const h = Math.floor(min / 60);
+      const m = min % 60;
+      return m ? `${h}h${String(m).padStart(2, '0')}` : `${h}h`;
+    };
+
+    function renderizarServicos() {
+      const grid = document.getElementById('grid-servicos');
+      const lista = SERVICOS.filter(s => s.cat === abaAtual);
+
+      grid.innerHTML = lista.map(s => {
+        const ativo = selecionados.has(s.id);
+        return `
+          <article onclick="toggleServico('${s.id}')" class="service-card rounded-2xl p-5 border cursor-pointer flex items-center justify-between gap-4 ${ativo ? 'bg-salon-sageLight/60 border-salon-sage' : 'bg-white border-stone-200/80'}">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <h3 class="font-display font-medium text-lg text-salon-espresso leading-snug">${s.nome}</h3>
+              </div>
+              <p class="text-xs text-salon-muted leading-relaxed">${s.desc}</p>
+              <div class="pt-1 flex items-center gap-3 text-xs">
+                <span class="font-bold text-salon-sageDark">${formatarMoeda(s.preco)}</span>
+                <span class="text-stone-300">•</span>
+                <span class="text-salon-muted"><i class="fa-regular fa-clock mr-1"></i>${formatarDuracao(s.duracaoMin)}</span>
+              </div>
+            </div>
+
+            <button type="button" class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition ${ativo ? 'bg-salon-sage text-white' : 'bg-salon-silk text-salon-espresso border border-stone-200'}">
+              <i class="fa-solid ${ativo ? 'fa-check' : 'fa-plus'}"></i>
+            </button>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function toggleServico(id) {
+      if (selecionados.has(id)) selecionados.delete(id);
+      else selecionados.add(id);
+      renderizarServicos();
+      atualizarBarraCombo();
+    }
+
+    function atualizarBarraCombo() {
+      const itens = SERVICOS.filter(s => selecionados.has(s.id));
+      const totalMin = itens.reduce((acc, s) => acc + s.duracaoMin, 0);
+      const totalValor = itens.reduce((acc, s) => acc + s.preco, 0);
+
+      document.getElementById('combo-qtd').textContent = String(itens.length);
+      document.getElementById('combo-tempo').textContent = `${formatarDuracao(totalMin)} estimados`;
+      document.getElementById('combo-valor').textContent = `A partir de ${formatarMoeda(totalValor)}`;
+
+      const barra = document.getElementById('barra-combo');
+      if (itens.length > 0) {
+        barra.classList.remove('translate-y-28', 'opacity-0', 'pointer-events-none');
+      } else {
+        barra.classList.add('translate-y-28', 'opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function irParaCategoria(cat) {
+      selecionarAba(cat);
+      document.getElementById('servicos').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function selecionarAba(cat) {
+      abaAtual = cat;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        const ativo = btn.dataset.tab === cat;
+        btn.className = ativo
+          ? 'tab-btn px-5 py-2.5 rounded-full text-xs font-bold bg-salon-sage text-white shrink-0 transition cursor-pointer'
+          : 'tab-btn px-5 py-2.5 rounded-full text-xs font-semibold bg-white text-salon-muted border border-stone-200 hover:border-salon-sage shrink-0 transition cursor-pointer';
+      });
+      renderizarServicos();
+    }
+
+    function abrirModalAgenda() {
+      const box = document.getElementById('ma-resumo-box');
+      const itens = SERVICOS.filter(s => selecionados.has(s.id));
+
+      if (itens.length === 0) {
+        box.innerHTML = `<p class="text-xs text-salon-sageDark">Nenhum serviço marcado ainda — você pode escolher direto com nossa recepção ou selecionar no menu acima.</p>`;
+      } else {
+        const totalMin = itens.reduce((acc, s) => acc + s.duracaoMin, 0);
+        const totalValor = itens.reduce((acc, s) => acc + s.preco, 0);
+        box.innerHTML = `
+          <p class="text-[11px] font-bold uppercase tracking-wider text-salon-sageDark">Serviços selecionados (${itens.length})</p>
+          <ul class="text-xs text-salon-espresso space-y-1">
+            ${itens.map(i => `<li>• ${i.nome} (${formatarMoeda(i.preco)})</li>`).join('')}
+          </ul>
+          <p class="text-xs font-semibold text-salon-sageDark pt-1 border-t border-salon-sage/15">
+            Tempo estimado: ${formatarDuracao(totalMin)} • Total a partir de ${formatarMoeda(totalValor)}
+          </p>
+        `;
+      }
+
+      document.getElementById('modal-agenda').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function fecharModalAgenda() {
+      document.getElementById('modal-agenda').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function initAnimations() {
+      if (typeof Lenis !== 'undefined') {
+        const lenis = new Lenis({
+          duration: 1.05,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true
+        });
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+        if (typeof ScrollTrigger !== 'undefined') {
+          lenis.on('scroll', ScrollTrigger.update);
+        }
+      }
+
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from('.hero-anim', {
+          y: 24,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity'
+        });
+
+        document.querySelectorAll('.reveal-up').forEach(el => {
+          gsap.from(el, {
+            y: 28,
+            opacity: 0,
+            duration: 0.75,
+            ease: 'power2.out',
+            clearProps: 'transform,opacity',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 95%',
+              once: true
+            }
+          });
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderizarServicos();
+      initAnimations();
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => selecionarAba(btn.dataset.tab));
+      });
+
+      document.getElementById('form-agenda').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nome = document.getElementById('ma-nome').value.trim();
+        const prof = document.getElementById('ma-prof').value;
+        const periodo = document.getElementById('ma-periodo').value;
+        const obs = document.getElementById('ma-obs').value.trim();
+        const itens = SERVICOS.filter(s => selecionados.has(s.id));
+
+        const listaTexto = itens.length > 0
+          ? itens.map(i => `• ${i.nome} (${formatarMoeda(i.preco)})`).join('\n')
+          : '• Quero orientação para escolher os serviços';
+
+        const msg = [
+          `🌿 *SOLICITAÇÃO DE HORÁRIO — ATELIER LUMIÈRE*`,
+          ``,
+          `• Cliente: ${nome}`,
+          `• Especialista: ${prof}`,
+          `• Preferência: ${periodo}`,
+          ``,
+          `*Serviços desejados:*`,
+          listaTexto,
+          obs ? `\n• Obs: ${obs}` : ''
+        ].filter(Boolean).join('\n');
+
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+        fecharModalAgenda();
+      });
+
+      document.getElementById('modal-agenda').addEventListener('click', (e) => {
+        if (e.target.id === 'modal-agenda') fecharModalAgenda();
+      });
+    });
+  </script>
+</body>
+</html>
